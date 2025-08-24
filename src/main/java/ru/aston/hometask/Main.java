@@ -5,32 +5,18 @@ import ru.aston.hometask.service.FileService;
 
 public class Main {
     public static void main(String[] args) {
-        FileService fileService = new FileService("data/test.txt");
+        FileService fileService = new FileService("/root/protected.txt");
 
         try {
-            fileService.writeFile("First line\nSecond line");
-            fileService.appendLine("Third line");
-            fileService.appendLine("Fourth line");
+            fileService.writeFile("Trying to write into a protected directory...");
+        } catch (FileOperationException e) {
+            System.err.println("Caught FileOperationException:");
+            System.err.println("Message: " + e.getMessage());
 
-            if (fileService.fileExists()) {
-                System.out.println("File: " + fileService.getFilePath());
-                System.out.println("Size: " + fileService.getFileSize() + " bytes\n");
+            if (e.getCause() != null) {
+                System.err.println("Original cause: " + e.getCause().getClass().getSimpleName());
+                System.err.println("Cause message: " + e.getCause().getMessage());
             }
-
-            System.out.println("=== readFromFile ===");
-            System.out.println(fileService.readFromFile());
-
-            System.out.println("\n=== readLines ===");
-            int i = 1;
-            for (String line : fileService.readLines()) {
-                System.out.println(i++ + ": " + line);
-            }
-
-            fileService.deleteFile();
-            System.out.println("Deleted: " + !fileService.fileExists());
-
-        } catch (FileOperationException | IllegalArgumentException e) {
-            System.err.println("Error: " + e.getMessage());
         }
     }
 }
