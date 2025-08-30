@@ -1,4 +1,4 @@
-package ru.aston.hometask.service;
+package ru.aston.hometask.service.intf;
 
 import ru.aston.hometask.exception.FileOperationException;
 
@@ -11,17 +11,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class FileService {
+public class FileService2 {
     private final Path filePath;
 
-    public FileService(String fileName) {
+    public FileService2(String fileName) {
         if (fileName == null || fileName.trim().isEmpty()) {
             throw new IllegalArgumentException("File name cannot be null or empty");
         }
         this.filePath = Path.of(fileName);
     }
 
-    public FileService(Path filePath) {
+    public FileService2(Path filePath) {
         this.filePath = Objects.requireNonNull(filePath, "filePath cannot be null");
     }
 
